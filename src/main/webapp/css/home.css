@@ -10,50 +10,6 @@ html, body {
   overflow: hidden; /* or 'auto' if you want scrollbars */
 }
 
-.nav-bar{
-background-color:#bca796;
-    position: sticky;
-  top: 0;
-  height: 75px;
-  vertical-align: top;
-  display: flex;
-  align-items: center;
-  padding: 0 10px;
-  z-index: 10;
-  font-family: Helvetica Neue;
-  border-bottom:0.5px solid gray;
-}
-a{
-    margin-right: 90px;
-    text-decoration: none;
-    font-size: 12px;
-    color: white;
-    transition: all 0.2s ease;
-    display: inline-block;
-    font-weight: bolder;
-}
-
-.offer{
-
-    display: flex;
-  flex-direction: column;
-  margin-left: 100px;
-}
-.slider {
-  margin-top: 20px;
-    height: 600px; /* Or however tall you want the carousel */
-    overflow: hidden;
-}
-
-.middle-nav{
-    position: relative;
-}
-.right-nav{
-display:flex;
-gap: 35px; 
-    margin-left: auto;
-    flex-direction:row;
-}
 .img1{
     object-fit: cover;
     height: 750px;
@@ -163,7 +119,6 @@ height: 400px;
   background-size: cover;
   padding: 80px 20px;
   text-align: center;
-  margin-bottom: 20px;
 }
 
 .about-content {
@@ -231,25 +186,6 @@ height: 400px;
     flex-shrink: 0;
 }
   
-.logo1{
-width:100px;
-flex:1;
-}
-.search{
-flex:1;
-}
-.search input{
-margin-top:5px;
-width:200px;
-height:15px;
-padding: 8px;
-border:none;
-  font-size: 12px;
-  border-radius:25px;
-   padding-left: 35px;
-}
-.cart{
-flex:1;}
 
 
 @keyframes slide {
@@ -358,18 +294,17 @@ flex:1;}
       height: 400px;
       margin-right: 10px;
     }
-    .recommended-for-you, .newest-arrival{
+    .recommended-for-you{
       position: relative;
       overflow: hidden;
       z-index: 9;
       background-color: rgb(240, 239, 235);
       padding-bottom: 20px;
       padding-top: 50px;
-      margin-bottom: 40px;
     }
    
 
-.recommended-for-you h2, .newest-arrival h2{
+.recommended-for-you h2{
   font-weight: 500;
   font-size: 30px;
   color: #555;
@@ -420,87 +355,10 @@ font-size: 15px;
   font-size: 0.9rem;
   color: #333;
 }
-.nav-bar a:hover{
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  font-weight: 600;
-  transform: translateX(1px);
-}
-.nav-bar a:active{
-  color: gray;
-  width: 30px;
-}
 
 
-.profile-container {
-flex:1;
-      position: relative;
-      display: inline-block;
-    }
 
-    .profile-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background-color: #bbb;
-      cursor: pointer;
-      margin-right:20px;
-    }
 
-    .dropdown-frame {
-      display: none;
-      position: absolute;
-      top: 50px;
-      right: 0;
-      width: 200px;
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-      z-index: 1000;
-      padding: 15px;
-    }
-
-    .dropdown-frame p {
-      margin: 5px 0;
-      font-size: 14px;
-    }
-
-    .dropdown-frame button {
-      width: 100%;
-      margin-top: 10px;
-      padding: 6px;
-      border: none;
-      background: #6c63ff;
-      color: white;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    .dropdown-frame button:hover {
-      background: #5751d9;
-    }
-
-    .slider-descrip1{
-      margin-top: 60px;
-      margin-left: 60px;
-    }
-    .logo1{
-    margin-left:20px;
-    }
-    .icon{
-    position:absolute;
-    top:14px;
-    right:429px;
-    }
-    .wishlist{
-    margin-top:6px;}
-    .cart{
-    margin-top:5px;
-    }
-    .header1{
-    margin-top:20px;
-    margin-botton:140px;
-    }
     .recommended-section {
   padding: 20px;
   background-color: #e2dcd7;
@@ -515,10 +373,11 @@ flex:1;
 
 .card-container {
   display: flex;
-  gap: 15px;
+  gap: 18px;
   overflow-x: auto;
   padding-bottom: 10px;
   margin-top:70px;
+  margin-left:20px;
 }
 
 .card {

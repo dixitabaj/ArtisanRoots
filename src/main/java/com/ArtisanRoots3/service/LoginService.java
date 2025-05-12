@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import com.ArtisanRoots3.config.DbConfig;
 import com.ArtisanRoots3.model.UserModel;
 
-public class login {
+public class LoginService {
 	public boolean insert(UserModel user) throws Exception{
 		    Connection con = null;
 		    boolean result = false;
@@ -20,7 +20,7 @@ public class login {
 		        con.setAutoCommit(false); // Start transaction
 		        System.out.println("Connected!");
 
-		        String query = "INSERT INTO user(user_first_name, user_last_name, username, user_phone_number, user_dob, user_email, user_roles, user_password, user_gender) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		        String query = "INSERT INTO user(user_first_name, user_last_name, username, user_phone_number, user_dob, user_email, user_roles, user_password, user_gender, date_joined, user_status, image_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		        
 		        try (PreparedStatement ps = con.prepareStatement(query)) {
 		            ps.setString(1, user.getFirstName());
@@ -32,7 +32,9 @@ public class login {
 		            ps.setString(7, "customer"); // Default role or use user.getRole()
 		            ps.setString(8, user.getPassword());
 		            ps.setString(9, user.getGender());
-		            
+		            ps.setDate(10,  java.sql.Date.valueOf(user.getJoinedDate()));
+		            ps.setString(11, user.getStatus());
+		            ps.setString(12, user.getUserImage());
 		            int rowsAffected = ps.executeUpdate();
 		            con.commit(); // Explicit commit
 		            
@@ -165,48 +167,6 @@ public class login {
 	    return user;
 	}
 
-	public boolean updateUser(UserModel user) throws Exception {
-		Connection con = null;
-	    boolean result = false;
-	    
-	    try {
-	        System.out.println("Trying to connect...");
-	        con = DbConfig.getConnection();
-	        con.setAutoCommit(false); // Start transaction
-	        System.out.println("Connected!");
-
-	        String query = "UPDATE user SET user_first_name = ?,  user_last_name = ?, username = ?, user_phone_number = ?, user_dob = ?, user_gender = ? WHERE user_email = ?";
-
-	        try (PreparedStatement ps = con.prepareStatement(query)) {
-	        	
-	        	 ps.setString(1, user.getFirstName());
-	             ps.setString(2, user.getLastName());
-	             ps.setString(3, user.getUsername());
-	             ps.setString(4, user.getPhone());
-	             ps.setDate(5, Date.valueOf(user.getDob()));  // Assuming user.getDob() returns LocalDate
-	             ps.setString(6, user.getGender());  // Set the actual gender from user object
-	             ps.setString(7, user.getEmail());  
-	            int rowsAffected = ps.executeUpdate();
-	            con.commit(); 
-	            
-	            System.out.println("Rows affected: " + rowsAffected);
-	            result = (rowsAffected > 0);
-	            
-	            // Verify the update by checking if the user still exists
-	            try (PreparedStatement verifyStmt = con.prepareStatement("SELECT * FROM user WHERE user_email = ?")) {
-	                verifyStmt.setString(1, user.getEmail());
-	                ResultSet rs = verifyStmt.executeQuery();
-	                System.out.println(rs.next() ? "User updated successfully" : "Update failed");
-	            }
-	        }
-	    } catch (SQLException e) {
-	        if (con != null) con.rollback(); // Rollback in case of failure
-	        System.err.println("SQL Error: " + e.getMessage());
-	        throw e;
-	    } finally {
-	        if (con != null) con.close();  // Close the connection
-	    }
-	    return result;
-	}
+	
 	}
 

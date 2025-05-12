@@ -58,7 +58,19 @@ flex:1;
 	margin-top: 185px;
 }
 .login-form {
-    background-color: rgba(255, 255, 255, 0.85); /* slight transparency */
+    background-color: rgba(227, 220, 210, 0.85); 
+    position:absolute;
+    right:50px;
+    padding: 40px;
+    border-radius: 15px;
+    width: 500px;
+    height: 630px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    margin-top:30px;
+  }
+
+.login-form {
+    background-color: rgba(234, 229, 222, 0.85); /* slight transparency */
     position:absolute;
     right:50px;
     padding: 40px;
@@ -82,17 +94,6 @@ flex:1;
     margin-top:30px;
   }
   
-  .sign-in {
-	text-align: center;
-	font-size: 14px;
-}
-
-.sign-in {
-	
-	font-weight: bold;
-	text-decoration: none;
-	color: #000;
-}
 
 .error{
 	font-size:10px;
@@ -112,4 +113,43 @@ flex:1;
 	color: #000;
 	
 }
-  /* Error message styling */
+.sign-in {
+	text-align: center;
+	font-size: 14px;
+}
+
+.sign-in {
+	
+	font-weight: bold;
+	text-decoration: none;
+	color: #000;
+}.gender-image-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  margin-top: 20px;
+flex-direction:row;
+}
+
+.gender-section,
+.image-section {
+  flex: 1;
+  width: 250px;
+}
+.image-section input[type="file"] {
+  font-size: 14px;
+  padding: 10px 12px;
+  background-color: #fdfdfd;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  width: 100%;
+  color: #333;
+  cursor: pointer;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.image-section input[type="file"]:hover {
+  border-color: #999;
+  background-color: #f1f1f1;
+}
+

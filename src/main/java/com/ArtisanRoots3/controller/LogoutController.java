@@ -16,13 +16,13 @@ import com.ArtisanRoots3.util.SessionUtil;
  * Servlet implementation class Logout
  */
 @WebServlet("/logout")
-public class Logout extends HttpServlet {
+public class LogoutController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Logout() {
+    public LogoutController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,8 +32,10 @@ public class Logout extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		CookieUtil.deleteCookie(response, "role");
+		
 		SessionUtil.invalidate(request);
+		CookieUtil.deleteCookie(response, "role");
+		
 		response.sendRedirect(request.getContextPath() + "/login");
 		
 	}

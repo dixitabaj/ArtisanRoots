@@ -18,7 +18,7 @@
 <div class="heading">
 <p>Registration form</p>
 </div>
-<form action="${pageContext.request.contextPath}/registration2" method="post">
+<form action="${pageContext.request.contextPath}/registration2" method="post" enctype="multipart/form-data">
 
 
     <div class="registration-form">
@@ -104,17 +104,40 @@
       </div>
 
     </div>
-    <div class="second-container">
-     <div class="row">
-          <label for="gender">Gender</label>
-          <br>
-          <input type="radio" id="male" value="male" name="gender" required>
-          <label for="male"  ${gender == 'male' ? 'checked' : ''}>Male</label> 
-           <input type="radio" id="Female" value="Female" name="gender" required >
-          <label for="female"  ${gender == 'female' ? 'checked' : ''}>Female</label> 
-           <input type="radio" id="Other" value="Other" name="gender" required>
-          <label for="other"  ${gender == 'other' ? 'checked' : ''}>Other</label> 
-        </div>
+<div class="second-container">
+  <div class="gender-image-row">
+  
+    <!-- Gender Section -->
+    <div class="gender-section">
+      <label for="gender">Gender</label><br>
+
+      <input type="radio" id="male" value="male" name="gender" 
+             ${gender == 'male' ? 'checked' : ''} required>
+      <label for="male">Male</label>
+
+      <input type="radio" id="female" value="female" name="gender" 
+             ${gender == 'female' ? 'checked' : ''} required>
+      <label for="female">Female</label>
+
+      <input type="radio" id="other" value="other" name="gender" 
+             ${gender == 'other' ? 'checked' : ''} required>
+      <label for="other">Other</label>
+    </div>
+<!--   <!-- Profile Picture Section -->
+    <div class="image-section">
+      <label for="image">Profile Picture:</label><br>
+      
+     <input type="file" id="profile-picture" name="image" class="file-input">
+    </div> 
+  
+
+  </div>
+</div>
+
+
+
+
+        
     <div class="row">
     <input class="register-button" type="submit" value="Register">
 
@@ -123,7 +146,7 @@
         <div class="sign-in-container">
         <a href="${pageContext.request.contextPath}/login" class="sign-in-section">
         Already Have an Account?<span class="sign-in">Sign in</span></a></div>
-        </div>
+       
   </form>
   
 </div>

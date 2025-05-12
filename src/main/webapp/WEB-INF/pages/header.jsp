@@ -5,8 +5,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Artisan Roots</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
 </head>
 <body>
 <div class="nav-bar">
@@ -19,9 +23,10 @@
         <c:choose>
             <%-- Admin links --%>
             <c:when test="${sessionScope.user.role == 'admin'}">
-                <a href="/ArtisanRoots3/admin/dashboard">Dashboard</a>
-                <a href="/ArtisanRoots3/admin/users">User Management</a>
-                <a href="/ArtisanRoots3/admin/reports">Reports</a>
+                <a href="/ArtisanRoots3/dashboard">DASHBOARD</a>
+                 <a href="/ArtisanRoots3/productmanage">PRODUCT MANAGEMENT</a>
+                <a href="/ArtisanRoots3/portfolio">PORTFOLIO</a>
+                <a href="/ArtisanRoots3/userManagement">USER MANAGEMENT</a>
             </c:when>
             
             <%-- Customer links (default) --%>
@@ -36,27 +41,38 @@
 
     <div class="right-nav">
         <%-- Search bar (shown to all) --%>
-        <div class="search">
-            <span class="icon">
-                <img src="${pageContext.request.contextPath}/resource/images/system/search.png" width="25px" height="25px">
-            </span>
-            <input type="text" placeholder="Search">
-        </div>
+                <c:if test="${sessionScope.user.role != 'admin'}">
+     
+           
+<%--            <div class="search-container">
+                <img class="search-icon" src="${pageContext.request.contextPath}/resource/images/system/search.png" alt="Search">
+                <input type="text" class="search-input" placeholder="Search">
+            </div> --%>
         
         <%-- Shopping features (only for customers) --%>
-        <c:if test="${sessionScope.user.role != 'admin'}">
             <div class="wishlist">
-                <img src="${pageContext.request.contextPath}/resource/images/system/wishlist.png" width="25px" height="25px">
+                <img src="${pageContext.request.contextPath}/resource/images/system/wishlist.png" width="28px" height="26px">
             </div>
             <div class="cart">
                 <img src="${pageContext.request.contextPath}/resource/images/system/cart1.png" width="25px" height="25px">
             </div>
         </c:if>
+     
+
         
         <%-- Simple logout button --%>
             <form action="${pageContext.request.contextPath}/logout" method="get">
                 <button type="submit" class="logout-btn">Logout</button>
             </form>
+             <%-- In your header.jsp --%>
+<%
+    String profileImage = (String) session.getAttribute("profileImage");
+    String path = request.getContextPath() + profileImage;
+                   
+%>
+<%-- <img src="/ArtisanRoots3/resource/images/system/<%= profileImage %>" 
+     alt="Profile" style="width: 40px; height: 40px; border-radius: 50%;"> --%>
+     <img src="/ArtisanRoots3/resource/images/system/profile4.png" style="width: 40px; height: 40px; border-radius: 50%";>
     </div>
 </div>
 </body>

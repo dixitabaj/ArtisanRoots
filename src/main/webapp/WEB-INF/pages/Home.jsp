@@ -20,47 +20,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<%-- <div class=nav-bar>
-    <div class="logo1">
-    <img class="logo" src="${pageContext.request.contextPath}/resource/images/system/logo4.png" width="120px" height="44px">
-</div>
-<div class="middle-nav">
-<a href="#"  class="hover-underline">HOME</a>
-<a href="/ArtisanRoots3/ContactUs">CONTACT US</a>
-<a href="/ArtisanRoots3/AboutUsController">ABOUT US</a>
-<a href="/ArtisanRoots3/Portfolio">PORTIFIO</a>
-</div>
 
-<div class="right-nav">
-<div class="search">
-  <span class="icon"><img src="${pageContext.request.contextPath}/resource/images/system/search.png" width="45px" height="45px"></span>
-<input type="text" placeholder="Search">
-</div>
-<div class="wishlist">
-<img src="${pageContext.request.contextPath}/resource/images/system/wishlist.png" width="25px" height="25px">
-</div>
-<div class="cart">
-<img src="${pageContext.request.contextPath}/resource/images/system/cart1.png" width="25px" height="25px">
-</div> 
-
-  <div class="profile-container">
-    <div class="profile-icon" onclick="toggleDropdown()"></div>
-    <div class="dropdown-frame" id="dropdown">
-      <p><strong>John Doe</strong></p>
-      <p>john@example.com</p>
-      <button>View Profile</button>
-      <button>Logout</button>
-    </div>
-  </div>
-  
-<!--   <script>
-    function toggleDropdown() {
-      const dropdown = document.getElementById("dropdown");
-      dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
-    }
-  </script> -->
-</div>
-</div> --%>
 <jsp:include page="header.jsp" />
 <section class="main-container">
   <div class="carousel-container">
@@ -72,7 +32,7 @@
               <div class="carousel-caption">
                 <h2>Shop Our Handmade Collection</h2>
                 <p>Unique crafts made with love.</p>
-                <a href="#" class="shop-now">Shop Now</a>
+                <a href="#recommended" class="shop-now">Shop Now</a>
               </div>
               </div>
             </div>
@@ -84,7 +44,7 @@
               <div class="slider-descrip1">
               <h2>Support Local Creators</h2>
             <p>Join the movement and empower small businesses with every purchase.</p>
-            <a href="#" class="shop-now">About Us</a>
+            <a href="/ArtisanRoots3/aboutus" class="shop-now">About Us</a>
             </div>
           </div>
               </div>
@@ -183,7 +143,7 @@
           <img src="${pageContext.request.contextPath}/resource/images/system/mostP.png" alt="Nordic Vase">
           <div class="card-info">
             <p class="product-name">NORDIC VASE</p>
-            <p class="product-price">$129.00</p>
+            <p class="product-price">Rs 12,900</p>
             <p class="product-meta">⭐⭐⭐⭐ (4.2) · 3.5k sold</p>
             <button class="add-cart-btn">Add to Cart</button>
           </div>
@@ -192,7 +152,7 @@
           <img src="${pageContext.request.contextPath}/resource/images/system/mostP2.png" alt="Product 1" />
           <div class="card-info">
             <p class="product-name">SAND AMPHOR</p>
-            <p class="product-price">$59.99</p>
+            <p class="product-price">Rs 8,999</p>
             <p class="product-meta">⭐⭐⭐⭐☆ (4.5) · 1.2k sold</p>
             <button class="add-cart-btn">Add to Cart</button>
           </div>
@@ -201,7 +161,7 @@
           <img src="${pageContext.request.contextPath}/resource/images/system/mostP1.png" alt="Product 1" />
           <div class="card-info">
             <p class="product-name">AQUA POT</p>
-            <p class="product-price">$59.99</p>
+            <p class="product-price">Rs. 6,999</p>
             <p class="product-meta">⭐⭐⭐⭐☆ (4.5) · 1.2k sold</p>
             <button class="add-cart-btn">Add to Cart</button>
           </div>
@@ -210,7 +170,7 @@
           <img src="${pageContext.request.contextPath}/resource/images/system/mostP3.png" alt="Product 1" />
           <div class="card-info">
             <p class="product-name">CERAMIC URN</p>
-            <p class="product-price">$59.99</p>
+            <p class="product-price">Rs. 5,999</p>
             <p class="product-meta">⭐⭐⭐⭐☆ (4.5) · 1.2k sold</p>
             <button class="add-cart-btn">Add to Cart</button>
           </div>
@@ -230,7 +190,7 @@
     <div class="about-content">
       <h2>About ArtisanRoots</h2>
       <p>We connect local Nepali artisans with the world. Every item you see here is handmade with love, rooted in heritage, and crafted with care.</p>
-      <a href="#" class="about-button">Learn More</a>
+      <a href="/ArtisanRoots3/contactus" class="about-button">Learn More</a>
     </div>
   </section>
   

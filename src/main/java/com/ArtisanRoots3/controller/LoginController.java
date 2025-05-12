@@ -3,7 +3,9 @@ package com.ArtisanRoots3.controller;
 import java.io.IOException;
 
 import com.ArtisanRoots3.model.UserModel;
-import com.ArtisanRoots3.service.login;
+import com.ArtisanRoots3.service.LoginService;
+import com.ArtisanRoots3.service.UpdateService;
+import com.ArtisanRoots3.util.CookieUtil;
 import com.ArtisanRoots3.util.PasswordUtil;
 import com.ArtisanRoots3.util.SessionUtil;
 import com.ArtisanRoots3.util.ValidationUtil;
@@ -15,7 +17,6 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 /**
  * @author dixitabajracharya
@@ -24,7 +25,7 @@ import jakarta.servlet.http.HttpSession;
 @WebServlet(asyncSupported = true, urlPatterns = { "/login" , "/" })
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	private LoginService loginService;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -39,7 +40,7 @@ public class LoginController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.getRequestDispatcher("WEB-INF/pages/Login.jsp").forward(request, response);
+		request.getRequestDispatcher("WEB-INF/pages/login.jsp").forward(request, response);
 	}
 
 	/**
@@ -52,7 +53,7 @@ public class LoginController extends HttpServlet {
 		String password=request.getParameter("password");
 		
 
-		login obj=new login();
+		LoginService obj=new LoginService();
 		String encrypted=obj.getEncryptedPassword(email);
 		
 			 String decrypted = PasswordUtil.decrypt(encrypted, email);
@@ -71,41 +72,46 @@ public class LoginController extends HttpServlet {
 		 if (emailAvailable) {
 			if (password.equals(decrypted)) {
 				System.out.println("Login successful");
-
                 UserModel loggedInUser = obj.getUserByEmail(email);
-                SessionUtil.setAttribute(request, "user", loggedInUser);
-                String role = loggedInUser.getRole();
-                // Set role cookie
-                Cookie roleCookie = new Cookie("role", "user"); // Or "admin" depending on role
-                roleCookie.setMaxAge(60 * 60); // 1 hour
-                roleCookie.setPath("/");
-                response.addCookie(roleCookie);
-
-                if ("admin".equalsIgnoreCase(role)) {
-    				response.sendRedirect(request.getContextPath() + "/productmanage");
-    			} else {
-    				response.sendRedirect(request.getContextPath() + "/home");
-    			}
+                String role = setUserSession(request, response, loggedInUser);
+                try {
+					SessionUtil.setAttribute(request, "profileImage", UpdateService.getImage(loggedInUser));
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} 
+                redirectUserBasedOnRole(request, response, role);
 
 			}
 			else {
 				System.out.println(decrypted);
 				System.out.println("password isnt correct");
-				
 				request.setAttribute("loginError", "Invalid email or password");
-				request.getRequestDispatcher("WEB-INF/pages/Login.jsp").forward(request, response);
+				request.getRequestDispatcher("WEB-INF/pages/login.jsp").forward(request, response);
 				return;
 			}
 		}
 		else {
 			request.setAttribute("loginError", "Invalid email or password");
-			request.getRequestDispatcher("WEB-INF/pages/Login.jsp").forward(request, response);
+			request.getRequestDispatcher("WEB-INF/pages/login.jsp").forward(request, response);
 
 			System.out.println("email isnt correct");
 			return;
 		}
 		
     }
-			
+	private String setUserSession(HttpServletRequest request, HttpServletResponse response, UserModel loggedInUser) {
+		SessionUtil.setAttribute(request, "user", loggedInUser);
+		CookieUtil.addCookie(response, "role", loggedInUser.getRole(), 60 * 60);
 
+		return loggedInUser.getRole();
+	}		
+	private void redirectUserBasedOnRole(HttpServletRequest request, HttpServletResponse response, String role)
+			throws IOException {
+		if ("admin".equalsIgnoreCase(role)) {
+			response.sendRedirect(request.getContextPath() + "/dashboard");
+		} else {
+			response.sendRedirect(request.getContextPath() + "/home");
+		}
+}
 }

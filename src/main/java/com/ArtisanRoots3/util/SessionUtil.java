@@ -5,7 +5,9 @@ import jakarta.servlet.http.HttpSession;
 
 public class SessionUtil {
 	public static void setAttribute(HttpServletRequest request, String key, Object value) {
+		final int DEFAULT_SESSION_TIMEOUT = 30 * 60 *60;
 		HttpSession session=request.getSession();
+		session.setMaxInactiveInterval(DEFAULT_SESSION_TIMEOUT);
 		session.setAttribute(key, value);
 	}
 	

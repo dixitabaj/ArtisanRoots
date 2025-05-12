@@ -5,155 +5,78 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Profile</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/portfolio.css">
 <style>
-body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #f8f5f0;
-    margin: 0;
-    padding: 0;
-}
-
-.main-container {
+/* Gender Radio Button Styling */
+.gender-options {
     display: flex;
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 20px;
-    gap: 30px;
+    gap: 20px;
+    margin-top: 8px;
 }
 
-.profile-section {
-    flex: 1;
-    background: white;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
-
-.profile-picture {
-    width: 150px;
-    height: 150px;
-    margin: 0 auto 20px;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 5px solid #d4c2ab;
-}
-
-.profile-picture img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.profile-info {
-    text-align: center;
-}
-
-.profile-info h2 {
-    color: #5d6b7a;
-    margin-bottom: 10px;
-}
-
-.profile-info p {
-    margin: 8px 0;
-    color: #555;
-}
-
-.form-section {
-    flex: 2;
-    background: white;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
-
-.tabs {
+.radio-container {
     display: flex;
-    margin-bottom: 20px;
-    border-bottom: 2px solid #eee;
-}
-
-.tab-btn {
-    padding: 10px 20px;
-    background: none;
-    border: none;
+    align-items: center;
+    position: relative;
+    padding-left: 25px;
     cursor: pointer;
-    font-weight: 500;
-    color: #777;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
-.tab-btn.active {
-    color: #5d6b7a;
-    border-bottom: 2px solid #5d6b7a;
+.radio-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
 }
 
-.form-content {
+.radio-checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 18px;
+    width: 18px;
+    background-color: #fff;
+    border-radius: 50%;
+    border: 2px solid #8B5A2B;
+}
+
+.radio-container:hover input ~ .radio-checkmark {
+    background-color: #f1f1f1;
+}
+
+.radio-container input:checked ~ .radio-checkmark {
+    background-color: #fff;
+}
+
+.radio-checkmark:after {
+    content: "";
+    position: absolute;
     display: none;
 }
 
-.form-content.active {
+.radio-container input:checked ~ .radio-checkmark:after {
     display: block;
 }
 
-.form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
+.radio-container .radio-checkmark:after {
+    top: 3px;
+    left: 3px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #8B5A2B;
 }
 
-.form-group {
-    margin-bottom: 15px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: 500;
-    color: #5d6b7a;
-}
-
-.form-group input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
-.form-actions {
-    margin-top: 20px;
-    text-align: right;
-}
-
-.btn {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: 500;
-}
-
-.btn-primary {
-    background: #5d6b7a;
-    color: white;
-}
-
-.btn-secondary {
-    background: #e0e0e0;
+.radio-label {
+    margin-left: 5px;
     color: #333;
-    margin-right: 10px;
-}
-
-@media (max-width: 768px) {
-    .main-container {
-        flex-direction: column;
-    }
-    
-    .profile-section,
-    .form-section {
-        width: 100%;
-    }
-}
-</style>
+}</style>
 </head>
 <body>
 
@@ -163,7 +86,13 @@ body {
     <!-- Profile Section -->
     <div class="profile-section">
         <div class="profile-picture">
-            <img src="${pageContext.request.contextPath}/images/face.png" alt="Profile Picture">
+        <%
+    String profileImage = (String) session.getAttribute("profileImage");
+    String path = request.getContextPath() + profileImage;
+                   
+%>
+<img src="/ArtisanRoots3/resource/images/system/<%= profileImage %>" 
+     alt="Profile" >
         </div>
         
         <% UserModel loggedInUser = (UserModel) session.getAttribute("user"); %>
@@ -188,64 +117,93 @@ body {
         
         
         <!-- Account Form -->
-        <div id="accountForm" class="form-content active">
-            <form method="post" action="${pageContext.request.contextPath}/portfolio">
+       <%
+    String activeTab = (String) request.getAttribute("activeTab");
+    boolean showAccount = "account".equals(activeTab) || activeTab == null;
+    boolean showPassword = "password".equals(activeTab);
+%>
+
+<div id="accountForm" class="form-content <%= showAccount ? "active" : "" %>">
+
+            <form action="${pageContext.request.contextPath}/portfolio" method="post">
+
                 <div class="form-grid">
                     <div class="form-group">
                         <label for="firstName">First Name</label>
                         <input type="text" id="firstName" name="firstName" value="<%= loggedInUser.getFirstName() %>" required>
+                         <span class="error">${firstNameError}</span>
                     </div>
                     
                     <div class="form-group">
                         <label for="lastName">Last Name</label>
                         <input type="text" id="lastName" name="lastName" value="<%= loggedInUser.getLastName() %>" required>
+                         <span class="error">${lastNameError}</span>
                     </div>
                     
                     <div class="form-group">
                         <label for="username">Username</label>
                         <input type="text" id="username" name="username" value="<%= loggedInUser.getUsername() %>" required>
+                         <span class="error">${usernameError}</span>
                     </div>
                     
+                    <!-- Phone Number Field -->
                     <div class="form-group">
                         <label for="phone">Phone Number</label>
-                        <input type="tel" id="phone" name="phone" value="<%= loggedInUser.getPhone() %>">
+                        <input type="text" id="phone" name="phone" value="<%= loggedInUser.getPhone() %>" required>
+                         <span class="error">${phoneNoError}</span>
                     </div>
-                    
+</div>
+                    <!-- Gender Selection -->
                     <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" value="<%= loggedInUser.getEmail() %>" required>
-                    </div>
+                        <label>Gender</label>
+                        <div class="second-container">
+    
+    </div>
+    <!-- Rest of your form... -->
+</div>
+                        <input type="radio" id="male" name="gender" value="Male" <%= loggedInUser.getGender().equals("Male") ? "checked" : "" %> required>
+                        <label for="male">Male</label>
+
+                        <input type="radio" id="female" name="gender" value="Female" <%= loggedInUser.getGender().equals("Female") ? "checked" : "" %> required>
+                        <label for="female">Female</label>
+
+                        <input type="radio" id="other" name="gender" value="Other" <%= loggedInUser.getGender().equals("Other") ? "checked" : "" %> required>
+                        <label for="other">Other</label>
+                       
+                   
                     
-                    <div class="form-group">
-                        <label for="dob">Date of Birth</label>
-                        <input type="date" id="dob" name="dob" value="<%= loggedInUser.getDob() %>">
-                    </div>
-                </div>
+                    
                 
                 <div class="form-actions">
                     <button type="reset" class="btn btn-secondary">Reset</button>
                     <button type="submit" class="btn btn-primary">Save Changes</button>
                 </div>
-            </form>
-        </div>
-        
+                </form>
+               </div>
+               
+         
         <!-- Password Form -->
         <div id="passwordForm" class="form-content">
-            <form action="${pageContext.request.contextPath}/update-password" method="post">
+            <form action="${pageContext.request.contextPath}/updatepassword" method="post">
+            
                 <div class="form-grid">
                     <div class="form-group">
+                    
                         <label for="currentPassword">Current Password</label>
-                        <input type="password" id="currentPassword" name="currentPassword" required>
+                        <input type="password" id="currentPassword" name=currentPassword value="${param.currentPass}" required>
+                         <span class="error">${enteredPassError}</span>
                     </div>
                     
                     <div class="form-group">
                         <label for="newPassword">New Password</label>
-                        <input type="password" id="newPassword" name="newPassword" required>
+                        <input type="password" id="newPassword" name="newPassword" value="${param.newPass}" required>
+                         <span class="error">${newPasswordError}</span>
                     </div>
                     
                     <div class="form-group">
                         <label for="confirmPassword">Confirm Password</label>
-                        <input type="password" id="confirmPassword" name="confirmPassword" required>
+                        <input type="password" id="confirmPassword" name="confirmPassword" value="${param.confirmPass}" required>
+                    	<span class="error">${confirmPasswordError}</span>
                     </div>
                 </div>
                 
@@ -255,7 +213,7 @@ body {
             </form>
         </div>
     </div>
-</div>
+
 
 <script>
 function showTab(tabName) {

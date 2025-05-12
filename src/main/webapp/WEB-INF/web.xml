@@ -15,7 +15,7 @@
 </servlet-mapping>
 <servlet-mapping>
   <servlet-name>default</servlet-name>
-  <url-pattern>/resource/images/system/*</url-pattern>
+  <url-pattern>/resource/images/*</url-pattern>
 </servlet-mapping>
 <servlet>
     <servlet-name>RegistrationControllerr</servlet-name>

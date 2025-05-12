@@ -18,10 +18,15 @@ public class UserModel {
     private String role;
     private String password;
     private String gender;
+    private String userImage;
+    
+    private LocalDate joinedDate;
+    private String status;
 
     // Constructor
     public UserModel(int userId, String firstName, String lastName, String username, String phone,
-                LocalDate dob, String email, String role, String password, String gender) {
+                LocalDate dob, String email, String role, String password, String gender, 
+                 LocalDate joinedDate, String status, String userImage) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -32,9 +37,26 @@ public class UserModel {
         this.role = role;
         this.password = password;
         this.gender = gender;
+        this.joinedDate=joinedDate;
+        this.status=status;
+        this.userImage=userImage;
     }
 
-    public UserModel() {
+    
+
+	public String getUserImage() {
+		return userImage;
+	}
+
+
+
+	public void setUserImage(String userImage) {
+		this.userImage = userImage;
+	}
+
+
+
+	public UserModel() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -87,6 +109,25 @@ public class UserModel {
 
 	public void setGender(String gender) {
 		this.gender = gender;
+	}
+	public LocalDate getJoinedDate() {
+		return joinedDate;
+	}
+
+	public void setJoinedDate(LocalDate joinedDate) {
+		this.joinedDate = joinedDate;
+	}
+
+
+
+	public String getStatus() {
+		return status;
+	}
+
+
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
 }
